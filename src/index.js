@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper'
 
 import CesiumViewer from './cesiumComponent'
 import LeftMenu from './components/leftMenu'
+import Left from './containers/leftContainer'
 
 import reducers from './reducers'
 
@@ -36,7 +37,8 @@ render(
         <MuiThemeProvider>
             <div id="cesium-container">
                 <Paper style={style.leftPaper}>
-                    <LeftMenu></LeftMenu>
+                    {/* <LeftMenu></LeftMenu> */}
+                    <Left></Left>
                 </Paper>
                 <Paper style={style.rightPaper}>
                     <CesiumViewer></CesiumViewer>
