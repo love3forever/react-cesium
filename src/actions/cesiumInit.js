@@ -28,14 +28,6 @@ const initConfig = {
     imageryProvider : bing
 }
 
-
-
-export const initCesium = (initConfig={},instance=undefined) => ({
-    type:CESIUM_INIT,
-    initConfig:initConfig,
-    instance:instance
-})
-
 export const initCesiumStart = () => ({
     type:CESIUM_INIT_START,
     message:'Initialize start'

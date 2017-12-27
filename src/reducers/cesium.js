@@ -1,4 +1,3 @@
-import {CESIUM_INIT,initCesium} from '../actions/cesiumInit'
 import * as cesiumInit from '../actions/cesiumInit'
 
 export const initCesiumReducer = (state={},action) => {

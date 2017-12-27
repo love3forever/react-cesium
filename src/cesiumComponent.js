@@ -20,7 +20,7 @@ class CesiumComponent extends Component {
         dispatch(initCesiumStart())
         let config = dispatch(initCesiumConfig())
         console.log(config)
-        let viewer = new Cesium.Viewer('cesium-container',config.config)
+        let viewer = new Cesium.Viewer('cesium',config.config)
         dispatch(initCesiumComplete(viewer))
     }
 
@@ -30,7 +30,7 @@ class CesiumComponent extends Component {
     
     render() {
         return (
-            <div id="cesium-container">
+            <div id="cesium">
             </div>
         );
     }
