@@ -2220,6 +2220,18 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
+echarts-for-react@^2.0.3:
+  version "2.0.3"
+  resolved "http://registry.npm.taobao.org/echarts-for-react/download/echarts-for-react-2.0.3.tgz#2e057dbf26e4e4b7f816b95ef03b0d90d068a2aa"
+  dependencies:
+    element-resize-event "2.0.7"
+
+echarts@^3.8.5:
+  version "3.8.5"
+  resolved "http://registry.npm.taobao.org/echarts/download/echarts-3.8.5.tgz#58e4a51d2743c6fb75257b0dc0a9cf9f5378ac0e"
+  dependencies:
+    zrender "3.7.4"
+
 ee-first@1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -2233,6 +2245,10 @@ electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.28:
   resolved "http://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.30.tgz#9666f532a64586651fc56a72513692e820d06a80"
   dependencies:
     electron-releases "^2.1.0"
+
+element-resize-event@2.0.7:
+  version "2.0.7"
+  resolved "http://registry.npm.taobao.org/element-resize-event/download/element-resize-event-2.0.7.tgz#8b63953715967cd2241620245573e79e684e07b0"
 
 elliptic@^6.0.0:
   version "6.4.0"
@@ -7170,3 +7186,7 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zrender@3.7.4:
+  version "3.7.4"
+  resolved "http://registry.npm.taobao.org/zrender/download/zrender-3.7.4.tgz#f847d53948481ef6d42906d1ea9aeec7acbefdf2"
