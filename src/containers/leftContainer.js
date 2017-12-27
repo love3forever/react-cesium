@@ -9,6 +9,10 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close'
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 import Dialog from 'material-ui/Dialog'
+import TopCard from '../components/cards'
+import Snackbar from 'material-ui/Snackbar'
+
+
 
 import ReactEcharts from 'echarts-for-react'
 
@@ -95,7 +99,9 @@ class LeftContainer extends Component {
         super(props)
         this.state = {
             drawerOpen:false,
-            dialogOpen:false
+            dialogOpen:false,
+            cardOpen:false,
+            snackbarOpen:false
         }
     }
 
@@ -107,6 +113,20 @@ class LeftContainer extends Component {
 
     handleClose = () => {
         this.setState({dialogOpen: false});
+    };
+
+    handleCardToggle = () => this.setState({cardOpen:!this.state.cardOpen})
+
+    handleClick = () => {
+        this.setState({
+        snackbarOpen: true,
+        });
+    };
+
+    handleRequestClose = () => {
+        this.setState({
+        snackbarOpen: false,
+        });
     };
 
     render() {
@@ -132,11 +152,14 @@ class LeftContainer extends Component {
                         <Menu autoWidth={false} style={style.menu} menuItemStyle={style.menulist}>
                             <MenuItem style={style.item} innerDivStyle={style.menulist} onClick={this.handleDrawerToggle}><RemoveRedEye style={style.icon}/></MenuItem>
                             <MenuItem style={style.item} innerDivStyle={style.menulist} onClick={this.handleOpen}><RemoveRedEye style={style.icon}/></MenuItem>
-                            <MenuItem style={style.item} innerDivStyle={style.menulist}><RemoveRedEye style={style.icon}/></MenuItem>
-                            <MenuItem style={style.item} innerDivStyle={style.menulist}><RemoveRedEye style={style.icon}/></MenuItem>
+                            <MenuItem style={style.item} innerDivStyle={style.menulist} onClick={this.handleCardToggle}><RemoveRedEye style={style.icon}/></MenuItem>
+                            <MenuItem style={style.item} innerDivStyle={style.menulist} onClick={this.handleClick}><RemoveRedEye style={style.icon}/></MenuItem>
                         </Menu>
                     </Paper>
                 </div>
+                {
+                    this.state.cardOpen && <TopCard></TopCard> 
+                }
                 <Drawer open={this.state.drawerOpen}>
                     <AppBar title="AppBar" iconElementRight={<IconButton onClick={this.handleDrawerToggle}><NavigationClose /></IconButton>}/>
                     <MenuItem>Menu Item</MenuItem>
@@ -154,6 +177,12 @@ class LeftContainer extends Component {
                         style={{height: '300px', width: '100%'}}
                     />
                 </Dialog>
+                <Snackbar
+                    open={this.state.snackbarOpen}
+                    message="Event added to your calendar"
+                    autoHideDuration={4000}
+                    onRequestClose={this.handleRequestClose}
+                />
             </div>
         );
     }
