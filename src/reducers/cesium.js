@@ -22,11 +22,6 @@ export const initCesiumReducer = (state={},action) => {
                 ...state,
                 instance:action.instance
             }
-        case cesiumInit.CESIUM_ADD_ENTITY_COMPLETE:
-            return {
-                ...state,
-                instance:action.viewer
-            }
         default:
             return state
     }

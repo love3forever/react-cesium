@@ -7,7 +7,7 @@ import logger from 'redux-logger'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
 
-import CesiumViewer from './cesiumComponent'
+import CesiumViewer from './containers/cesiumOrigin'
 import LeftMenu from './components/leftMenu'
 import Left from './containers/leftContainer'
 

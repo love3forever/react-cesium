@@ -15,8 +15,7 @@ import Snackbar from 'material-ui/Snackbar'
 import ReactEcharts from 'echarts-for-react'
 
 import Cesium from 'cesium/Cesium'
-
-import {addEntityToCesium} from '../actions/cesiumInit'
+import {addEntityToCesium} from '../actionWithoutReducer/cesiumActions'
 
 const style = {
     div: {
@@ -137,11 +136,9 @@ class LeftContainer extends Component {
         this.setState({
             snackbarOpen: true,
         });
-        // const {cesium,dispatch} = this.props
-        // console.log(cesium)
-        // dispatch(addEntityToCesium(cesium))
         const {cesium} = this.props
-        cesium.instance.entities.add(pointEntity)
+        let viewer = cesium.instance
+        addEntityToCesium(viewer,pointEntity)
     };
 
     handleRequestClose = () => {

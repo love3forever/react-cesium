@@ -62,20 +62,3 @@ const pointEntity = {
         color: Cesium.Color.YELLOW
     }
 }
-
-export const CESIUM_ADD_ENTITY = 'CESIUM_ADD_ENTITY'
-export const CESIUM_ADD_ENTITY_COMPLETE = 'CESIUM_ADD_ENTITY_COMPLETE'
-
-const addEntityToCesiumComplete = (viewer) => ({
-    type:CESIUM_ADD_ENTITY_COMPLETE,
-    viewer
-})
-
-export const addEntityToCesium = (state,entity=pointEntity) => dispatch => {
-    // let viewer = _.cloneDeep(state.instance)
-    let viewer = state.instance
-    if (viewer) {
-        viewer.entities.add(entity)
-    }
-    dispatch(addEntityToCesiumComplete(viewer))
-}

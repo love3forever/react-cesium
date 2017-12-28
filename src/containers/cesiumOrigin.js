@@ -1,20 +1,11 @@
-import Cesium from 'cesium/Cesium'
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
-import {initCesiumStart,initCesiumConfig,initCesiumLayer,initCesiumComplete} from './actions/cesiumInit'
+import {initCesiumStart, initCesiumConfig, initCesiumLayer, initCesiumComplete} from '../actions/cesiumInit'
+
+import Cesium from 'cesium/Cesium'
 import 'cesium/Widgets/widgets.css'
 
 class CesiumComponent extends Component {
-
-    static propTypes = {
-        initConfig:PropTypes.object
-    }
-
-    handleCesiumConfigUpdate = (viewer,option) => {
-        viewer.options = option
-    }
-
     init = () => {
         const {cesium,dispatch} = this.props
         dispatch(initCesiumStart())
@@ -25,18 +16,21 @@ class CesiumComponent extends Component {
 
     componentDidMount() {
         this.init()
-    }    
-    
+    } 
+
     render() {
         return (
             <div id="cesium">
+                
             </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const {cesium={}} = state
+    const {
+        cesium = {}
+    } = state
     return cesium
 }
 
