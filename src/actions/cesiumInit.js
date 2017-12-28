@@ -1,4 +1,6 @@
 import Cesium from 'cesium/Cesium'
+import deepcopy from 'deepcopy'
+import * as _ from 'lodash'
 
 export const CESIUM_INIT_START = 'CESIUM_INIT_START'
 export const CESIUM_INIT_CONFIG = 'CESIUM_INIT_CONFIG'
@@ -51,3 +53,29 @@ export const initCesiumComplete = (cesiumInstance) => ({
     type:CESIUM_INIT_COMPLETED,
     instance:cesiumInstance
 })
+
+
+const pointEntity = {
+    position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+    point: {
+        pixelSize: 10,
+        color: Cesium.Color.YELLOW
+    }
+}
+
+export const CESIUM_ADD_ENTITY = 'CESIUM_ADD_ENTITY'
+export const CESIUM_ADD_ENTITY_COMPLETE = 'CESIUM_ADD_ENTITY_COMPLETE'
+
+const addEntityToCesiumComplete = (viewer) => ({
+    type:CESIUM_ADD_ENTITY_COMPLETE,
+    viewer
+})
+
+export const addEntityToCesium = (state,entity=pointEntity) => dispatch => {
+    // let viewer = _.cloneDeep(state.instance)
+    let viewer = state.instance
+    if (viewer) {
+        viewer.entities.add(entity)
+    }
+    dispatch(addEntityToCesiumComplete(viewer))
+}

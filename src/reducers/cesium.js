@@ -17,6 +17,16 @@ export const initCesiumReducer = (state={},action) => {
                 ...state,
                 layerProvider:action.layerProvider
             }
+        case cesiumInit.CESIUM_INIT_COMPLETED:
+            return {
+                ...state,
+                instance:action.instance
+            }
+        case cesiumInit.CESIUM_ADD_ENTITY_COMPLETE:
+            return {
+                ...state,
+                instance:action.viewer
+            }
         default:
             return state
     }

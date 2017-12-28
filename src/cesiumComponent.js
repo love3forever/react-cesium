@@ -19,7 +19,6 @@ class CesiumComponent extends Component {
         const {cesium,dispatch} = this.props
         dispatch(initCesiumStart())
         let config = dispatch(initCesiumConfig())
-        console.log(config)
         let viewer = new Cesium.Viewer('cesium',config.config)
         dispatch(initCesiumComplete(viewer))
     }

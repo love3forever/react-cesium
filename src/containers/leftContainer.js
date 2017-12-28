@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import Paper from 'material-ui/Paper'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
@@ -11,10 +12,11 @@ import AppBar from 'material-ui/AppBar'
 import Dialog from 'material-ui/Dialog'
 import TopCard from '../components/cards'
 import Snackbar from 'material-ui/Snackbar'
-
-
-
 import ReactEcharts from 'echarts-for-react'
+
+import Cesium from 'cesium/Cesium'
+
+import {addEntityToCesium} from '../actions/cesiumInit'
 
 const style = {
     div: {
@@ -94,6 +96,14 @@ const option = {
     ]
 }
 
+const pointEntity = {
+    position: Cesium.Cartesian3.fromDegrees(-75.59777, 40.03883),
+    point: {
+        pixelSize: 10,
+        color: Cesium.Color.YELLOW
+    }
+}
+
 class LeftContainer extends Component {
     constructor(props) {
         super(props)
@@ -104,6 +114,12 @@ class LeftContainer extends Component {
             snackbarOpen:false
         }
     }
+
+    componentDidMount() {
+        const {cesium} = this.props
+        console.log(cesium)
+    }
+    
 
     handleDrawerToggle = () => this.setState({drawerOpen:!this.state.drawerOpen})
 
@@ -119,8 +135,13 @@ class LeftContainer extends Component {
 
     handleClick = () => {
         this.setState({
-        snackbarOpen: true,
+            snackbarOpen: true,
         });
+        // const {cesium,dispatch} = this.props
+        // console.log(cesium)
+        // dispatch(addEntityToCesium(cesium))
+        const {cesium} = this.props
+        cesium.instance.entities.add(pointEntity)
     };
 
     handleRequestClose = () => {
@@ -188,4 +209,11 @@ class LeftContainer extends Component {
     }
 }
 
-export default LeftContainer;
+const mapStateToProps = (state, ownProps) => {
+    return {
+        cesium: state.cesium
+    }
+}
+
+
+export default connect(mapStateToProps)(LeftContainer);

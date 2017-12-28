@@ -2,6 +2,7 @@ import React from 'react'
 import {render} from 'react-dom'
 import {createStore,applyMiddleware,compose} from 'redux'
 import {Provider} from 'react-redux'
+import reduxThunk from 'redux-thunk'
 import logger from 'redux-logger'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
@@ -15,7 +16,7 @@ import reducers from './reducers'
 import './style/index.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let store = createStore(reducers,applyMiddleware(logger))
+let store = createStore(reducers, composeEnhancers(applyMiddleware(logger,reduxThunk)))
 
 const style = {
     leftPaper : {
