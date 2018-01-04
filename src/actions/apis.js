@@ -58,19 +58,19 @@ export const getStationMhMin = (stcd, start, end) => (
 
 // 根据站点编号获取站点某一时段平均流量
 const GET_STATION_MQ_AVG = PREFIX_URL + 'apis/mqavg/'
-export const getStationMhAvg = (stcd, start, end) => (
+export const getStationMqAvg = (stcd, start, end) => (
     axios.get(`${GET_STATION_MQ_AVG}${stcd}/from/${start}/to/${end}`)
 )
 
 // 根据站点编号获取某一时段内最大流量
 const GET_STATION_MQ_MAX = PREFIX_URL + 'apis/mqmax/'
-export const getStationMhMax = (stcd, start, end) => (
+export const getStationMqMax = (stcd, start, end) => (
     axios.get(`${GET_STATION_MQ_MAX}${stcd}/from/${start}/to/${end}`)
 )
 
 // 根据站点编号获取某一时段最小流量
 const GET_STATION_MQ_MIN = PREFIX_URL + 'apis/mqmin/'
-export const getStationMhMin = (stcd, start, end) => (
+export const getStationMqMin = (stcd, start, end) => (
     axios.get(`${GET_STATION_MQ_MIN}${stcd}/from/${start}/to/${end}`)
 )
 
