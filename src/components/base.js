@@ -21,6 +21,23 @@ const style = {
     }
 }
 
+const bingKey = 'AnFQp5vgNIyQ1nLbp463VCuKs18gxbdjVaVNb2pdqiSpidyxLJzM-XmnM2qJ6Xqm'
+
+const bing = new Cesium.BingMapsImageryProvider({url: 'https://dev.virtualearth.net', key: bingKey, mapStyle: Cesium.BingMapsStyle.AERIAL});
+
+const initConfig = {
+    animation: false,
+    timeline: false,
+    navigationInstructionsInitiallyVisible: false,
+    navigationHelpButton: false,
+    sceneModePicker: false,
+    baseLayerPicker: false,
+    infoBox: false,
+    selectionIndicator: false,
+    clock: null,
+    imageryProvider: bing
+}
+
 class BaseComponent extends Component {
     constructor(props){
         super(props)
@@ -30,7 +47,7 @@ class BaseComponent extends Component {
     }
 
     componentDidMount(){
-        let viewer = new Cesium.Viewer('cesium')
+        let viewer = new Cesium.Viewer('cesium',initConfig)
         this.setState({
             viewer,
             viewerLoaded:true
