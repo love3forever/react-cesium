@@ -1,11 +1,11 @@
-import {initLayerContainer,INIT_LAYERCONTAINER} from '../actions/layerContainer'
+import {INIT_LAYERPROVIDER} from '../actions/layerContainer'
 
 export const initLayerContainerReducer = (state={},action) => {
     switch (action.type) {
-        case INIT_LAYERCONTAINER:
+        case INIT_LAYERPROVIDER:
             return {
                 ...state,
-                layerContainer:action.layerContainer
+                layerProviders:action.layerProviders
             }
         default:
             return state

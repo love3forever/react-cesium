@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
@@ -13,7 +14,7 @@ import Avatar from 'material-ui/Avatar'
 
 import Cesium from 'cesium/Cesium'
 
-import {initLayerContainerAction} from '../actions/layerContainer'
+import {initLayerProviderAction} from '../actions/layerContainer'
 
 const style = {
     avatar:{
@@ -34,6 +35,10 @@ class ImageLayerManager extends Component {
         }
     }
 
+    static propTypes = {
+        layerProviders: PropTypes.object,
+    }
+
     initLayerContainer = () => {
         let container = {
             'ArcGIS World Street Maps':new Cesium.ArcGisMapServerImageryProvider({
@@ -50,10 +55,10 @@ class ImageLayerManager extends Component {
 
     componentDidMount() {
         console.log(this.state.viewer)
-        const {dispatch,initLayerContainer} = this.props
-        if (!initLayerContainer) {
+        const {dispatch,layerProviders} = this.props
+        if (!layerProviders) {
             let container = this.initLayerContainer()
-            // dispatch(initLayerContainerAction(container))
+            dispatch(initLayerProviderAction(container))
         }
     }
 
@@ -138,12 +143,11 @@ class ImageLayerManager extends Component {
     }
 }
 
-// const mapStateToProps = (state, ownProps) => {
-//     const {initLayerContainer} = state
-//     return {
-//         initLayerContainer
-//     }
-// }
+const mapStateToProps = state => {
+    const {layerProviders} = state
+    return {
+        layerProviders
+    }
+}
 
-// export default connect(mapStateToProps(ImageLayerManager))
-export default ImageLayerManager
+export default connect(mapStateToProps)(ImageLayerManager)

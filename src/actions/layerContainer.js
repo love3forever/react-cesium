@@ -1,8 +1,8 @@
-export const INIT_LAYERCONTAINER = 'INIT_LAYERCONTAINER'
-export const initLayerContainerAction = (layerContainer) => (
+export const INIT_LAYERPROVIDER = 'INIT_LAYERPROVIDER'
+export const initLayerProviderAction = (layerProviders) => (
     {
-        type:INIT_LAYERCONTAINER,
-        layerContainer
+        type:INIT_LAYERPROVIDER,
+        layerProviders
     }
 )
 

@@ -5,11 +5,11 @@ import BaseViewer  from './components/base'
 import {createStore,applyMiddleware} from 'redux'
 import {Provider} from 'react-redux'
 import logger from 'redux-logger'
-import rootReducer from './reducers/combianReducers'
-
+// import rootReducer from './reducers/combianReducers'
+import {initLayerContainerReducer} from './reducers/layerContainer'
 import './style/index.css'
 
-const store = createStore(rootReducer,applyMiddleware(logger))
+const store = createStore(initLayerContainerReducer, applyMiddleware(logger))
 
 render(
     <Provider store={store}>
