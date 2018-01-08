@@ -36,10 +36,6 @@ class ImageLayerManager extends Component {
         }
     }
 
-    static propTypes = {
-        layerProviders: PropTypes.array,
-    }
-
     initLayerContainer = () => {
         let providerContainer = []
         let ArcGisMapServerImageryProvider = new Map()
@@ -148,33 +144,6 @@ class ImageLayerManager extends Component {
     handleClose = () => {
         this.setState({open: false})
     }
-
-    selectImageLayer = (type) => {
-        switch (type) {
-            case 'BMA':
-                return () => {
-                    let provider = new Cesium.BingMapsImageryProvider({
-                        url : 'https://dev.virtualearth.net',
-                        mapStyle : Cesium.BingMapsStyle.AERIAL,
-                        key:bingKey
-                    })                    
-                    this.state.viewer.imageryLayers.addImageryProvider(provider)
-                }
-            case 'BMAL':
-                return () => {
-                    let provider = new Cesium.BingMapsImageryProvider({
-                        url : 'https://dev.virtualearth.net',
-                        mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS,
-                        key:bingKey
-                    })
-                    this.state.viewer.imageryLayers.addImageryProvider(provider)
-                }
-            default:
-                break;
-        }
-    }
-    
-    
 
     render() {
          const actions = [
