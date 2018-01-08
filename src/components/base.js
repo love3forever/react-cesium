@@ -35,7 +35,7 @@ const initConfig = {
     infoBox: false,
     selectionIndicator: false,
     clock: null,
-    imageryProvider: bing
+    // imageryProvider: bing
 }
 
 class BaseComponent extends Component {

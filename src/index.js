@@ -2,12 +2,21 @@ import React from 'react'
 import {render} from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import BaseViewer  from './components/base'
+import {createStore,applyMiddleware} from 'redux'
+import {Provider} from 'react-redux'
+import logger from 'redux-logger'
+import rootReducer from './reducers/combianReducers'
 
 import './style/index.css'
 
+const store = createStore(rootReducer,applyMiddleware(logger))
+
 render(
-    <MuiThemeProvider>
-        <BaseViewer></BaseViewer>
-    </MuiThemeProvider>,
+    <Provider store={store}>
+        <MuiThemeProvider>
+            <BaseViewer></BaseViewer>
+        </MuiThemeProvider>
+    </Provider>
+    ,
     document.getElementById('root')
 ) 

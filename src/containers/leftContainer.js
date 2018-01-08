@@ -15,6 +15,7 @@ import ReactEcharts from 'echarts-for-react'
 import Cesium from 'cesium/Cesium'
 
 import {getAllStationInfo} from '../actions/apis'
+import ImageLayerManager from '../components/imageLayerManager'
 
 const style = {
     div: {
@@ -109,7 +110,8 @@ class LeftContainer extends Component {
             drawerOpen:false,
             dialogOpen:false,
             cardOpen:false,
-            snackbarOpen:false
+            snackbarOpen:false,
+            viewer:props.viewer
         }
     }
 
@@ -174,9 +176,10 @@ class LeftContainer extends Component {
                     this.state.cardOpen && <TopCard></TopCard> 
                 }
                 <Drawer open={this.state.drawerOpen}>
-                    <AppBar title="AppBar" iconElementRight={<IconButton onClick={this.handleDrawerToggle}><NavigationClose /></IconButton>}/>
-                    <MenuItem>Menu Item</MenuItem>
-                    <MenuItem>Menu Item 2</MenuItem>
+                    <AppBar title="图层管理" iconElementRight={<IconButton onClick={this.handleDrawerToggle}><NavigationClose /></IconButton>}/>
+                    <ImageLayerManager viewer={this.state.viewer}></ImageLayerManager>
+                    <MenuItem>图形图层</MenuItem>
+                    <MenuItem>模型图层</MenuItem>
                 </Drawer>
                 <Dialog
                     title="Dialog With Actions"
