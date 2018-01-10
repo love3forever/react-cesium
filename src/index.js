@@ -7,10 +7,11 @@ import {Provider} from 'react-redux'
 import logger from 'redux-logger'
 // import rootReducer from './reducers/combianReducers'
 import {initLayerContainerReducer} from './reducers/layerContainer'
+import rootReducer from './reducers/rootReducer'
 import './style/index.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-const store = createStore(initLayerContainerReducer, composeEnhancers(applyMiddleware(logger)))
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)))
 
 render(
     <Provider store={store}>

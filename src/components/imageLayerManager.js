@@ -32,7 +32,6 @@ class ImageLayerManager extends Component {
         this.state = {
             viewer:props.viewer,
             open:false,
-            layerProviders:props.layerProviders
         }
     }
 
@@ -61,11 +60,34 @@ class ImageLayerManager extends Component {
         BingMapsImageryProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
         providerContainer.push(BingMapsImageryProvider)
 
+        let BlueMarbleProvider = new Map()
+        BlueMarbleProvider.set('id',2)
+        BlueMarbleProvider.set('selected',false)
+        const blueMarbleUrl = 'http://192.168.2.157:5000/tiles/L16'
+        const blueMarble = new Cesium.createTileMapServiceImageryProvider({
+            url:blueMarbleUrl
+        })
+        BlueMarbleProvider.set('provider',blueMarble)
+        BlueMarbleProvider.set('name','Blue Marble')
+        BlueMarbleProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
+        providerContainer.push(BlueMarbleProvider)
+
+        let TerrainProvider = new Map()
+        TerrainProvider.set('id',3)
+        TerrainProvider.set('selected',false)
+        const terrainUrl = 'http://192.168.2.157/terrain_tile'
+        const terrain = new Cesium.CesiumTerrainProvider({
+            url:terrainUrl
+        })
+        TerrainProvider.set('provider',terrain)
+        TerrainProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
+        TerrainProvider.set('name','Terrain')
+        providerContainer.push(TerrainProvider)
+
         return providerContainer
     }
 
     initLayerSelector = (providers) => {
-        console.log('init image provider')
         let selectors = []
         for (let index = 0; index < providers.length; index++) {
             const element = providers[index];
@@ -91,7 +113,7 @@ class ImageLayerManager extends Component {
 
     selectLayerProviderById = id => () => {
         const viewer = this.state.viewer
-        const {layerProviders} = this.state
+        const {layerProviders} = this.props
         const targetProvider = layerProviders.filter(provider=>provider.get('id')===id)
         targetProvider.forEach(provider => {
             if (!provider.get('selected')) {
@@ -114,8 +136,6 @@ class ImageLayerManager extends Component {
                 })
                 
             }
-
-            console.log(viewer.imageryLayers.length)
         });
     }
 
@@ -126,16 +146,6 @@ class ImageLayerManager extends Component {
             dispatch(initLayerProviderAction(container))
         }
     }
-
-    componentWillUpdate(nextProps, nextState) {
-        if (nextProps!=this.props) {
-            console.log(nextProps)
-            this.setState({
-                layerProviders:nextProps.layerProviders
-            })
-        }
-    }
-    
 
     handleOpen = () => {
         this.setState({open: true})
@@ -173,7 +183,7 @@ class ImageLayerManager extends Component {
                     >
                     <Subheader>可选图层</Subheader>
                     <List>
-                        {this.state.layerProviders && this.initLayerSelector(this.state.layerProviders)}
+                        {this.props.layerProviders.length && this.initLayerSelector(this.props.layerProviders)}
                     </List>
                 </Dialog>
             </div>
@@ -182,10 +192,9 @@ class ImageLayerManager extends Component {
 }
 
 const mapStateToProps = state => {
-    const {layerProviders=[],selectedProviders=[],layers=new Set()} = state
+    const {layerProviders=[],layers=new Set()} = state.imageLayer
     return {
         layerProviders,
-        selectedProviders,
         layers
     }
 }
