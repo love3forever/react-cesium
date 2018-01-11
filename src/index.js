@@ -1,15 +1,17 @@
 import React from 'react'
 import {render} from 'react-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import BaseViewer  from './components/base'
-import {createStore,applyMiddleware} from 'redux'
+import BaseViewer  from './components/viewerContainer'
+import {createStore,applyMiddleware,compose} from 'redux'
 import {Provider} from 'react-redux'
 import logger from 'redux-logger'
 // import rootReducer from './reducers/combianReducers'
 import {initLayerContainerReducer} from './reducers/layerContainer'
+import rootReducer from './reducers/rootReducer'
 import './style/index.css'
 
-const store = createStore(initLayerContainerReducer, applyMiddleware(logger))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger)))
 
 render(
     <Provider store={store}>

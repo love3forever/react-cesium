@@ -16,6 +16,7 @@ import Cesium from 'cesium/Cesium'
 
 import {getAllStationInfo} from '../actions/apis'
 import ImageLayerManager from '../components/imageLayerManager'
+import TerrainLayerManager from '../components/terrainLayerManager'
 
 const style = {
     div: {
@@ -111,7 +112,6 @@ class LeftContainer extends Component {
             dialogOpen:false,
             cardOpen:false,
             snackbarOpen:false,
-            viewer:props.viewer
         }
     }
 
@@ -177,8 +177,8 @@ class LeftContainer extends Component {
                 }
                 <Drawer open={this.state.drawerOpen}>
                     <AppBar title="图层管理" iconElementRight={<IconButton onClick={this.handleDrawerToggle}><NavigationClose /></IconButton>}/>
-                    <ImageLayerManager viewer={this.state.viewer}></ImageLayerManager>
-                    <MenuItem>图形图层</MenuItem>
+                    <ImageLayerManager imageryProvidersList={this.props.imageryProvidersList}></ImageLayerManager>
+                    <TerrainLayerManager terrainProviderList={this.props.terrainProviderList}></TerrainLayerManager>
                     <MenuItem>模型图层</MenuItem>
                 </Drawer>
                 <Dialog
