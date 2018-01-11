@@ -30,7 +30,6 @@ class ImageLayerManager extends Component {
     constructor(props){
         super(props)
         this.state = {
-            viewer:props.viewer,
             open:false,
         }
     }
@@ -88,6 +87,7 @@ class ImageLayerManager extends Component {
     }
 
     initLayerSelector = (providers) => {
+        console.log('image init')
         let selectors = []
         for (let index = 0; index < providers.length; index++) {
             const element = providers[index];
@@ -112,8 +112,7 @@ class ImageLayerManager extends Component {
     }
 
     selectLayerProviderById = id => () => {
-        const viewer = this.state.viewer
-        const {layerProviders} = this.props
+        const {layerProviders,viewer} = this.props
         const targetProvider = layerProviders.filter(provider=>provider.get('id')===id)
         targetProvider.forEach(provider => {
             if (!provider.get('selected')) {

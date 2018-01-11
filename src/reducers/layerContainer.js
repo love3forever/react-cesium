@@ -1,4 +1,5 @@
 import {INIT_LAYERPROVIDER,SELECT_LAYERPROVIDER,REMOVE_LAYERPROVIDER,REMOVE_LAYER,ADD_LAYER} from '../actions/layerContainer'
+import * as _ from 'lodash'
 
 export const initLayerContainerReducer = (state={},action) => {
     switch (action.type) {
@@ -8,7 +9,7 @@ export const initLayerContainerReducer = (state={},action) => {
                 layerProviders:action.layerProviders
             }
         case SELECT_LAYERPROVIDER:
-            const newState = Object.assign({},state)
+            const newState = _.cloneDeep(state)
             const targetId = action.selected
             newState.layerProviders.forEach(element => {
                 if (element.get('id')===targetId) {

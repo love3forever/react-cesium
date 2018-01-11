@@ -28,7 +28,6 @@ class TerrainLayerManager extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            viewer: props.viewer,
             open: false
         }
     }
@@ -50,6 +49,7 @@ class TerrainLayerManager extends Component {
     }
 
     initTerrainSelector = (providers) => {
+        console.log('terrain init')
         let selectors = []
         for (let index = 0; index < providers.length; index++) {
             const element = providers[index];
@@ -71,8 +71,7 @@ class TerrainLayerManager extends Component {
     }
 
     selectTerrainProviderById = id => () => {
-        const viewer = this.state.viewer
-        const {terrainProviders,dispatch} = this.props
+        const {terrainProviders,viewer,dispatch} = this.props
         const targetProvider = terrainProviders.filter(provider => provider.get('id') === id)
         targetProvider.forEach(provider => {
             if (!provider.get('selected')) {
