@@ -14,7 +14,7 @@ import Avatar from 'material-ui/Avatar'
 
 import Cesium from 'cesium/Cesium'
 
-import {initTerrainContainer,addTerrainLayer,removeTerrainLayer} from '../actions/terrainContainer'
+import {selectedTerrainsChanged} from '../actions/terrainContainer'
  
 const style = {
     avatar: {
@@ -32,22 +32,6 @@ class TerrainLayerManager extends Component {
         }
     }
 
-    initTerrainContainer = () => {
-        let providerContainer = []
-
-        let TerrainProvider = new Map()
-        TerrainProvider.set('id', 0)
-        TerrainProvider.set('selected', false)
-        const terrainUrl = 'http://192.168.2.157/t'
-        const terrain = new Cesium.CesiumTerrainProvider({url: terrainUrl})
-        TerrainProvider.set('provider', terrain)
-        TerrainProvider.set('thumbnail', 'Widgets/Images/ImageryProviders/bingRoads.png')
-        TerrainProvider.set('name', 'Terrain')
-        providerContainer.push(TerrainProvider)
-
-        return providerContainer
-    }
-
     initTerrainSelector = (providers) => {
         console.log('terrain init')
         let selectors = []
@@ -55,14 +39,14 @@ class TerrainLayerManager extends Component {
             const element = providers[index];
             const selector = (
                 <ListItem
-                    primaryText={element.get('name')}
+                    primaryText={element.name}
                     leftIcon=
                     {<Avatar style={style.avatar}
                         size={60}
-                        src={element.get('thumbnail')}
+                        src={element.thumbnail}
                     />}
-                    key={element.get('id')}
-                    onClick={this.selectTerrainProviderById(element.get('id'))}>
+                    key={element.id}
+                    onClick={this.selectTerrainProviderById(element.id)}>
                 </ListItem>
             )
             selectors.push(selector)
@@ -71,28 +55,15 @@ class TerrainLayerManager extends Component {
     }
 
     selectTerrainProviderById = id => () => {
-        const {terrainProviders,viewer,dispatch} = this.props
-        const targetProvider = terrainProviders.filter(provider => provider.get('id') === id)
-        targetProvider.forEach(provider => {
-            if (!provider.get('selected')) {
-                viewer.terrainProvider = provider.get('provider')
-                dispatch(addTerrainLayer(id))
-            } else {
-                viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider()
-                dispatch(removeTerrainLayer(id))
-            }
-        });
-    }
-
-    componentDidMount() {
-        const {dispatch, terrainProviders} = this.props
-        if (!terrainProviders.length) {
-            let container = this.initTerrainContainer()
-            dispatch(initTerrainContainer(container))
+        let selectedTerrain = this.props.terrainSelected
+        if (selectedTerrain.indexOf(id)===-1) {
+            selectedTerrain.push(id)
+        }else{
+            selectedTerrain = selectedTerrain.filter(i=>i!==id)
         }
-    }
 
-    componentWillUpdate(nextProps, nextState) {
+        const {dispatch} = this.props
+        dispatch(selectedTerrainsChanged(selectedTerrain))
     }
 
     handleOpen = () => {
@@ -129,7 +100,7 @@ class TerrainLayerManager extends Component {
                     onRequestClose={this.handleClose}>
                     <Subheader>可选图层</Subheader>
                     <List>
-                        {this.props.terrainProviders.length && this.initTerrainSelector(this.props.terrainProviders)}
+                        {this.props.terrainProviderList.length && this.initTerrainSelector(this.props.terrainProviderList)}
                     </List>
                     <Subheader>自定义图层</Subheader>
                     <List></List>
@@ -141,10 +112,9 @@ class TerrainLayerManager extends Component {
 
 const mapStateToProps = state => {
     const {
-        terrainProviders = [],
-        terrainLayers = new Set()
+        terrainSelected = [],
     } = state.terrainLayer
-    return {terrainProviders, terrainLayers}
+    return {terrainSelected}
 }
 
 export default connect(mapStateToProps)(TerrainLayerManager)

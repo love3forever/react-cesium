@@ -15,6 +15,7 @@ import Avatar from 'material-ui/Avatar'
 import Cesium from 'cesium/Cesium'
 
 import {initLayerProviderAction,selectLayerProvider,removeLayerProvider,addLayer,removeLayer} from '../actions/layerContainer'
+import {selectedImagerysChanged} from '../actions/layerContainer'
 
 const style = {
     avatar:{
@@ -34,58 +35,6 @@ class ImageLayerManager extends Component {
         }
     }
 
-    initLayerContainer = () => {
-        let providerContainer = []
-        let ArcGisMapServerImageryProvider = new Map()
-        ArcGisMapServerImageryProvider.set('id',0)
-        ArcGisMapServerImageryProvider.set('name','ArcGIS World Street Maps')
-        const arggisProvider = new Cesium.ArcGisMapServerImageryProvider({
-            url : 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer'
-        })
-        ArcGisMapServerImageryProvider.set('provider',arggisProvider)
-        ArcGisMapServerImageryProvider.set('selected',false)
-        ArcGisMapServerImageryProvider.set('thumbnail','Widgets/Images/ImageryProviders/esriWorldImagery.png')
-        providerContainer.push(ArcGisMapServerImageryProvider)
-
-        let BingMapsImageryProvider = new Map()
-        BingMapsImageryProvider.set('id',1)
-        BingMapsImageryProvider.set('name','Bing Maps Road')
-        const bingProvider = new Cesium.BingMapsImageryProvider({
-            url : 'https://dev.virtualearth.net',
-            mapStyle: Cesium.BingMapsStyle.ROAD
-        })
-        BingMapsImageryProvider.set('provider',bingProvider)
-        BingMapsImageryProvider.set('selected',false)
-        BingMapsImageryProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
-        providerContainer.push(BingMapsImageryProvider)
-
-        let BlueMarbleProvider = new Map()
-        BlueMarbleProvider.set('id',2)
-        BlueMarbleProvider.set('selected',false)
-        const blueMarbleUrl = 'http://192.168.2.157:5000/tiles/L16'
-        const blueMarble = new Cesium.createTileMapServiceImageryProvider({
-            url:blueMarbleUrl
-        })
-        BlueMarbleProvider.set('provider',blueMarble)
-        BlueMarbleProvider.set('name','Blue Marble')
-        BlueMarbleProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
-        providerContainer.push(BlueMarbleProvider)
-
-        let TerrainProvider = new Map()
-        TerrainProvider.set('id',3)
-        TerrainProvider.set('selected',false)
-        const terrainUrl = 'http://192.168.2.157/terrain_tile'
-        const terrain = new Cesium.CesiumTerrainProvider({
-            url:terrainUrl
-        })
-        TerrainProvider.set('provider',terrain)
-        TerrainProvider.set('thumbnail','Widgets/Images/ImageryProviders/bingRoads.png')
-        TerrainProvider.set('name','Terrain')
-        providerContainer.push(TerrainProvider)
-
-        return providerContainer
-    }
-
     initLayerSelector = (providers) => {
         console.log('image init')
         let selectors = []
@@ -93,16 +42,16 @@ class ImageLayerManager extends Component {
             const element = providers[index];
             const selector = (
                 <ListItem 
-                    primaryText = {element.get('name')} 
+                    primaryText = {element.name} 
                     leftIcon = 
                         {
                             <Avatar style={style.avatar} 
                                 size={60} 
-                                src = {element.get('thumbnail')}
+                                src = {element.thumbnail}
                             />
                         }
-                    key = {element.get('id')}
-                    onClick = {this.selectLayerProviderById(element.get('id'))}
+                    key = {element.id}
+                    onClick = {this.selectLayerProviderById(element.id)}
                 >   
                 </ListItem>
             )
@@ -112,38 +61,18 @@ class ImageLayerManager extends Component {
     }
 
     selectLayerProviderById = id => () => {
-        const {layerProviders,viewer} = this.props
-        const targetProvider = layerProviders.filter(provider=>provider.get('id')===id)
-        targetProvider.forEach(provider => {
-            if (!provider.get('selected')) {
-                const layer = viewer.imageryLayers.addImageryProvider(provider.get('provider'))
-                const {dispatch} = this.props
-                dispatch(selectLayerProvider(id))
-                const layerMap = new Map()
-                layerMap.set('id',id)
-                layerMap.set('layer',layer)
-                dispatch(addLayer(layerMap))
-            }
-            else{
-                const {dispatch,layers} = this.props
-                dispatch(removeLayerProvider(id))
-                layers.forEach(layer=>{
-                    if (layer.get('id')===id) {
-                        viewer.imageryLayers.remove(layer.get('layer'),false)
-                        dispatch(removeLayer(id)) 
-                    }
-                })
-                
-            }
-        });
+        let selectedImagery = this.props.imagerySelected
+        if (selectedImagery.indexOf(id)===-1) {
+            selectedImagery.push(id)
+        }else{
+            selectedImagery = selectedImagery.filter(i=>i!==id)
+        }
+
+        const {dispatch} = this.props
+        dispatch(selectedImagerysChanged(selectedImagery))
     }
 
     componentDidMount() {
-        const {dispatch,layerProviders} = this.props
-        if (!layerProviders.length) {
-            let container = this.initLayerContainer()
-            dispatch(initLayerProviderAction(container))
-        }
     }
 
     handleOpen = () => {
@@ -182,7 +111,7 @@ class ImageLayerManager extends Component {
                     >
                     <Subheader>可选图层</Subheader>
                     <List>
-                        {this.props.layerProviders.length && this.initLayerSelector(this.props.layerProviders)}
+                        {this.props.imageryProvidersList.length && this.initLayerSelector(this.props.imageryProvidersList)}
                     </List>
                 </Dialog>
             </div>
@@ -191,10 +120,9 @@ class ImageLayerManager extends Component {
 }
 
 const mapStateToProps = state => {
-    const {layerProviders=[],layers=new Set()} = state.imageLayer
+    const {imagerySelected=[]} = state.imageLayer
     return {
-        layerProviders,
-        layers
+        imagerySelected,
     }
 }
 
