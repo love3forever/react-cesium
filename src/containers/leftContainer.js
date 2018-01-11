@@ -15,8 +15,8 @@ import ReactEcharts from 'echarts-for-react'
 import Cesium from 'cesium/Cesium'
 
 import {getAllStationInfo} from '../actions/apis'
-import ImageLayerManager from '../components/imageLayerManager'
-import TerrainLayerManager from '../components/terrainLayerManager'
+import ImageLayerManager from './imageLayerManager'
+import TerrainLayerManager from './terrainLayerManager'
 
 const style = {
     div: {
