@@ -15,8 +15,8 @@ import ReactEcharts from 'echarts-for-react'
 import Cesium from 'cesium/Cesium'
 
 import {getAllStationInfo} from '../actions/apis'
-import ImageLayerManager from '../components/imageLayerManager'
-import TerrainLayerManager from '../components/terrainLayerManager'
+import ImageLayerManager from './imageLayerManager'
+import TerrainLayerManager from './terrainLayerManager'
 
 const style = {
     div: {
@@ -187,6 +187,7 @@ class LeftContainer extends Component {
                     actions={actions}
                     open={this.state.dialogOpen}
                     onRequestClose={this.handleClose}
+                    autoScrollBodyContent={true}
                     >
                     <ReactEcharts
                         option={option}

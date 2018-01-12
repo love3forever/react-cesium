@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import Cesium from 'cesium/Cesium'
 import 'cesium/Widgets/widgets.css'
 import Paper from 'material-ui/Paper'
-import LeftMenu from './leftMenu'
-import Left from '../containers/leftContainer'
+import LeftMenu from '../components/leftMenu'
+import Left from './leftContainer'
 
 import {initImageryProviders,initTerrainProviders} from '../cesiumCommon/initProviders'
 import {addImageryProvider,removeImageryProvider} from '../actions/layerContainer'
@@ -111,7 +111,7 @@ class BaseComponent extends Component {
     
     // 影像图层添加或移除
     handleImagerySelectedChange = (props) => {
-        const {imagerySelected} = props
+        const {dispatch, imagerySelected} = props
         this.imageryProviders.forEach(
             provider => {
                 if (imagerySelected.indexOf(provider.id)===-1 && provider.selected) {
@@ -131,7 +131,6 @@ class BaseComponent extends Component {
                         console.log('add layer provider:',provider.id)
                     }
                     provider.selected = true
-                    const {dispatch} = this.props
                     dispatch(addImageryProvider(provider.name))
                 }
             }
