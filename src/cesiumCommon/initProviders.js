@@ -17,7 +17,7 @@ export const initImageryProviders = () => {
         id:1,
         name:'Bing Maps Road',
         provider:new Cesium.BingMapsImageryProvider({
-        url : 'https://dev.virtualearth.net',
+            url : 'https://dev.virtualearth.net',
             mapStyle: Cesium.BingMapsStyle.ROAD
         }),
         selected:false,
@@ -25,16 +25,51 @@ export const initImageryProviders = () => {
     }
     providerContainer.push(BingMapsImageryProvider)
 
-    // let BlueMarbleProvider = {
-    //     id:2,
-    //     name:'Blue Marble',
-    //     provider:new Cesium.createTileMapServiceImageryProvider({
-    //         url:blueMarbleUrl
-    //     }),
-    //     selected:false,
-    //     thumbnail:'Widgets/Images/ImageryProviders/bingRoads.png'
-    // }
-    // providerContainer.push(BlueMarbleProvider)
+    let MapboxImageryProviderSatellite = {
+        id:2,
+        name:'Mapbox Satellite',
+        provider:new Cesium.MapboxImageryProvider({
+            mapId: 'mapbox.satellite'
+        }),
+        selected:false,
+        thumbnail:'Widgets/Images/ImageryProviders/mapboxSatellite.png'
+    }
+    providerContainer.push(MapboxImageryProviderSatellite)
+
+    let MapboxImageryProviderStreets = {
+        id:3,
+        name:'Mapbox Streets Classic',
+        provider:new Cesium.MapboxImageryProvider({
+            mapId: 'mapbox.streets-basic'
+        }),
+        selected:false,
+        thumbnail:'Widgets/Images/ImageryProviders/mapboxStreets.png'
+    }
+    providerContainer.push(MapboxImageryProviderStreets)
+
+    let TileMapServiceImageryProviderBlack = {
+        id:4,
+        name:'The Black Marble',
+        provider:Cesium.createTileMapServiceImageryProvider({
+            url : 'https://cesiumjs.org/blackmarble',
+            flipXY : true,
+            credit : 'Black Marble imagery courtesy NASA Earth Observatory'
+        }),
+        selected:false,
+        thumbnail:'Widgets/Images/ImageryProviders/blackMarble.png'
+    }
+    providerContainer.push(TileMapServiceImageryProviderBlack)
+
+    let TileMapServiceImageryProviderN2 = {
+        id:5,
+        name:'Natural Earth\u00a0II',
+        provider:Cesium.createTileMapServiceImageryProvider({
+            url : 'Assets/Textures/NaturalEarthII'
+        }),
+        selected:false,
+        thumbnail:'Widgets/Images/ImageryProviders/naturalEarthII.png'
+    }
+    providerContainer.push(TileMapServiceImageryProviderN2)
 
     return providerContainer
 }

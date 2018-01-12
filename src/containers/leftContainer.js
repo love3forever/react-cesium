@@ -187,6 +187,7 @@ class LeftContainer extends Component {
                     actions={actions}
                     open={this.state.dialogOpen}
                     onRequestClose={this.handleClose}
+                    autoScrollBodyContent={true}
                     >
                     <ReactEcharts
                         option={option}
